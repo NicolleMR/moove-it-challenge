@@ -5,6 +5,9 @@ module.exports = {
       backgroundImage: {
         cork: "url('./assets/images/cork-bg.jpg')",
       },
+      borderWidth: {
+        16: "16px",
+      },
     },
   },
   plugins: [],

@@ -1,3 +1,7 @@
-const Home = () => <h1>This is the Home Page</h1>;
+const Home = () => (
+  <div>
+    <h1 className="text-6xl text-white text-center text-shadow">Moove It Notes</h1>;
+  </div>
+);
 
 export default Home;
