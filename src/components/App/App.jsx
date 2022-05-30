@@ -6,9 +6,9 @@ import Header from "../Header";
 
 const App = () => (
   <BrowserRouter>
-    <div className="min-h-screen bg-cork bg-cover px-6 pt-24 pb-8">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-cork bg-cover px-6 pt-24 pb-8">
       <Header />
-      <div className="mx-auto max-w-screen-xl px-2.5">
+      <div className="mx-auto w-full max-w-screen-xl px-2.5">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="trash" element={<Trash />} />
