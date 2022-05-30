@@ -1,5 +1,5 @@
 import Button from "../Button";
-import trashEmpty from "../../assets/images/trash-empty.png";
+import Icon from "../Icon";
 
 const Header = () => (
   <header className="fixed top-0 left-0 right-0 z-10 bg-[#C08C4A] shadow-md shadow-[#C08C4A]">
@@ -8,11 +8,9 @@ const Header = () => (
         Moove It Notes
       </h1>
       <Button className="mr-3.5 hover:bg-white hover:text-[#C08C4A]">New Post +</Button>
-      <img
-        className="bottom-1	right-1 w-10	cursor-pointer"
-        src={trashEmpty}
-        alt="Trash can empty"
-      />
+      <button type="button" onClick={() => {}}>
+        <Icon color="white" name="trash-empty" title="Trash" />
+      </button>
     </div>
   </header>
 );
