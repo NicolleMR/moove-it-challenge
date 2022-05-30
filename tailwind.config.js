@@ -14,6 +14,9 @@ module.exports = {
       height: {
         280: "17.5rem",
       },
+      gridTemplateColumns: {
+        "auto-fill": "repeat(auto-fill, minmax(18rem, 1fr))",
+      },
     },
   },
   plugins: [],
