@@ -1,5 +1,7 @@
-import PostIt from "../../components/PostIt/PostIt";
+import { useState } from "react";
+import PostIt from "../../components/PostIt";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 const postsIt = [
   { id: 1, text: "Moove It", type: "show" },
@@ -10,15 +12,27 @@ const postsIt = [
 ];
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   if (!postsIt?.length) {
     return (
       <div className="flex flex-col items-center">
         <h2 className="text-shadow mb-8 bg-[#F19336] p-4 text-center text-5xl font-bold text-white">
           You&apos;ve not created any note yet
         </h2>
-        <Button className="bg-white py-1.5 px-[3.12rem] text-2xl text-[#C08C4A] hover:bg-transparent hover:text-white">
+        <Button
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          className="bg-white py-1.5 px-[3.12rem] text-2xl text-[#C08C4A] hover:bg-transparent hover:text-white"
+        >
           Create It
         </Button>
+        <Modal isModalOpen={isModalOpen} closeModal={closeModal} label="Create Note">
+          <PostIt onClose={closeModal} type="edit" />
+        </Modal>
       </div>
     );
   }

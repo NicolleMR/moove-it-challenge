@@ -1,11 +1,11 @@
 import PostIt from "../../components/PostIt/PostIt";
 
 const postsIt = [
-  /* { id: 1, text: "Moove It", type: "trash" },
+  { id: 1, text: "Moove It", type: "trash" },
   { id: 2, text: "Challenge", type: "trash" },
   { id: 3, text: "Nicolle MR", type: "trash" },
   { id: 4, text: "Hachiko", type: "trash" },
-  { id: 5, text: "Nalita", type: "trash" }, */
+  { id: 5, text: "Nalita", type: "trash" },
 ];
 
 const Trash = () => {

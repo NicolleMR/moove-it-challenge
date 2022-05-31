@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import pushPin from "../../assets/images/push-pin.png";
 import Icon from "../Icon";
 
-const PostIt = ({ type, text }) => {
+const PostIt = ({ type, text, onClose }) => {
   const isEditType = type === "edit";
   const isShowType = type === "show";
   const isTrashType = type === "trash";
@@ -44,7 +44,7 @@ const PostIt = ({ type, text }) => {
             <button
               className="text-[1.06rem] font-bold tracking-widest text-black underline"
               type="button"
-              onClick={() => {}}
+              onClick={onClose}
             >
               Close
             </button>
@@ -84,9 +84,11 @@ export default PostIt;
 PostIt.propTypes = {
   type: PropTypes.oneOf(["edit", "show", "trash"]),
   text: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 PostIt.defaultProps = {
   type: "show",
   text: "",
+  onClose: () => {},
 };

@@ -9,6 +9,9 @@ module.exports = {
         "crumpled-paper-purple": "url('./assets/images/crumpled-paper-purple.jpg')",
         "crumpled-paper-green": "url('./assets/images/crumpled-paper-green.jpg')",
       },
+      backgroundColor: {
+        overlay: "rgba(0,0,0,0.8)",
+      },
       gridTemplateColumns: {
         "auto-fill": "repeat(auto-fill, minmax(18rem, 1fr))",
       },
