@@ -1,17 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import Modal from "../Modal";
 import Button from "../Button";
-import PostIt from "../PostIt";
 import Icon from "../Icon";
+import PostItModal from "../PostItModal";
+import ConfirmModal from "../ConfirmModal";
 
 const Header = () => {
   const { pathname } = useLocation();
   const isTrashPage = pathname === "/trash";
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const [isPostItModalOpen, setIsPostItModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-10 bg-[#C08C4A] shadow-md shadow-[#C08C4A]">
@@ -21,7 +20,14 @@ const Header = () => {
               <Icon color="white" name="arrow-left" title="Back to home" />
             </Link>
             <h1 className="text-shadow text-5xl font-bold text-white">Moove It Trash</h1>
-            <Button className="mr-3.5">Empty trash</Button>
+            <Button
+              onClick={() => {
+                setIsConfirmModalOpen(true);
+              }}
+              className="mr-3.5"
+            >
+              Empty trash
+            </Button>
           </div>
         ) : (
           <div className="relative mx-auto flex max-w-screen-xl justify-end px-2.5 py-3.5">
@@ -30,7 +36,7 @@ const Header = () => {
             </h1>
             <Button
               onClick={() => {
-                setIsModalOpen(true);
+                setIsPostItModalOpen(true);
               }}
               className="mr-3.5"
             >
@@ -42,9 +48,21 @@ const Header = () => {
           </div>
         )}
       </header>
-      <Modal isModalOpen={isModalOpen} closeModal={closeModal} label="Create Note">
-        <PostIt onClose={closeModal} type="edit" />
-      </Modal>
+      <PostItModal
+        closeModal={() => {
+          setIsPostItModalOpen(false);
+        }}
+        isModalOpen={isPostItModalOpen}
+      />
+      <ConfirmModal
+        closeModal={() => {
+          setIsConfirmModalOpen(false);
+        }}
+        isModalOpen={isConfirmModalOpen}
+        title="Empty Trash"
+        description="Are you sure you want to empty the trash?"
+        onConfirm={() => {}}
+      />
     </>
   );
 };

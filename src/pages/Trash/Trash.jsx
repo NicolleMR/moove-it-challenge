@@ -1,4 +1,6 @@
+import { useState } from "react";
 import PostIt from "../../components/PostIt/PostIt";
+import ConfirmModal from "../../components/ConfirmModal";
 
 const postsIt = [
   { id: 1, text: "Moove It", type: "trash" },
@@ -9,6 +11,7 @@ const postsIt = [
 ];
 
 const Trash = () => {
+  const [isTrashModalOpen, setIsTrashModalOpen] = useState(false);
   if (!postsIt?.length) {
     return (
       <div className="flex flex-col items-center">
@@ -21,8 +24,24 @@ const Trash = () => {
   return (
     <main className="grid grid-cols-auto-fill gap-5">
       {postsIt.map(({ id, text, type }) => (
-        <PostIt key={id} text={text} type={type} />
+        <PostIt
+          key={id}
+          text={text}
+          type={type}
+          onRemoveFromTrash={() => {
+            setIsTrashModalOpen(true);
+          }}
+        />
       ))}
+      <ConfirmModal
+        isModalOpen={isTrashModalOpen}
+        closeModal={() => {
+          setIsTrashModalOpen(false);
+        }}
+        title="Delete note from trash"
+        description="Are you sure you want to delete this note from trash?"
+        onConfirm={() => {}}
+      />
     </main>
   );
 };

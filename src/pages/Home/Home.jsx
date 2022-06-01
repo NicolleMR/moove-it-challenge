@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PostIt from "../../components/PostIt";
 import Button from "../../components/Button";
-import Modal from "../../components/Modal";
+import PostItModal from "../../components/PostItModal";
 
 const postsIt = [
   { id: 1, text: "Moove It", type: "show" },
@@ -12,10 +12,8 @@ const postsIt = [
 ];
 
 const Home = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const [isPostItModalOpen, setIsPostItModalOpen] = useState(false);
+
   if (!postsIt?.length) {
     return (
       <div className="flex flex-col items-center">
@@ -24,23 +22,40 @@ const Home = () => {
         </h2>
         <Button
           onClick={() => {
-            setIsModalOpen(true);
+            setIsPostItModalOpen(true);
           }}
           className="bg-white py-1.5 px-[3.12rem] text-2xl text-[#C08C4A] hover:bg-transparent hover:text-white"
         >
           Create It
         </Button>
-        <Modal isModalOpen={isModalOpen} closeModal={closeModal} label="Create Note">
-          <PostIt onClose={closeModal} type="edit" />
-        </Modal>
+        <PostItModal
+          closeModal={() => {
+            setIsPostItModalOpen(false);
+          }}
+          isModalOpen={isPostItModalOpen}
+        />
       </div>
     );
   }
   return (
     <main className="grid grid-cols-auto-fill gap-5">
       {postsIt.map(({ id, text, type }) => (
-        <PostIt key={id} text={text} type={type} />
+        <PostIt
+          key={id}
+          text={text}
+          type={type}
+          onDelete={() => {}}
+          onEdit={() => {
+            setIsPostItModalOpen(true);
+          }}
+        />
       ))}
+      <PostItModal
+        closeModal={() => {
+          setIsPostItModalOpen(false);
+        }}
+        isModalOpen={isPostItModalOpen}
+      />
     </main>
   );
 };
