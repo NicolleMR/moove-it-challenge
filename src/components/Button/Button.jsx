@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const Button = ({ children, className, onClick }) => (
   <button
-    className={`rounded-[0.31rem] border border-white bg-transparent py-1.5 px-5 font-semibold text-white outline-none transition-colors duration-500 hover:bg-white hover:text-[#C08C4A] ${className}`}
+    className={`rounded-[0.31rem] border border-white bg-transparent px-2.5  py-1	font-semibold text-white outline-none transition-colors duration-500 hover:bg-white hover:text-[#C08C4A] md:py-1.5 md:px-5 ${className}`}
     onClick={onClick}
     type="button"
   >

@@ -15,11 +15,13 @@ const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-10 bg-[#C08C4A] shadow-md shadow-[#C08C4A]">
         {isTrashPage ? (
-          <div className="mx-auto flex max-w-screen-xl items-center justify-between px-2.5 py-3.5">
+          <div className="mx-auto flex max-w-screen-xl items-center justify-around px-2.5 py-3.5 md:justify-between">
             <Link to="/">
               <Icon color="white" name="arrow-left" title="Back to home" />
             </Link>
-            <h1 className="text-shadow text-5xl font-bold text-white">Moove It Trash</h1>
+            <h1 className="text-shadow text-2xl font-bold text-white md:text-5xl">
+              Moove It Trash
+            </h1>
             <Button
               onClick={() => {
                 setIsConfirmModalOpen(true);
@@ -30,21 +32,23 @@ const Header = () => {
             </Button>
           </div>
         ) : (
-          <div className="relative mx-auto flex max-w-screen-xl justify-end px-2.5 py-3.5">
-            <h1 className="text-shadow absolute right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2 text-center text-5xl font-bold text-white">
+          <div className="relative mx-auto flex max-w-screen-xl justify-between px-2.5 py-3.5 md:justify-end">
+            <h1 className="text-shadow text-2xl font-bold text-white md:absolute md:right-1/2 md:bottom-1/2 md:translate-x-1/2 md:translate-y-1/2 md:text-center md:text-5xl">
               Moove It Notes
             </h1>
-            <Button
-              onClick={() => {
-                setIsPostItModalOpen(true);
-              }}
-              className="mr-3.5"
-            >
-              New Post +
-            </Button>
-            <Link to="/trash">
-              <Icon color="white" name="trash-empty" title="Trash" />
-            </Link>
+            <div className="flex">
+              <Button
+                onClick={() => {
+                  setIsPostItModalOpen(true);
+                }}
+                className="mr-3.5"
+              >
+                New Post +
+              </Button>
+              <Link to="/trash">
+                <Icon color="white" name="trash-empty" title="Trash" />
+              </Link>
+            </div>
           </div>
         )}
       </header>
