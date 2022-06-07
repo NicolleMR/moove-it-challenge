@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Button from "../Button";
@@ -5,11 +6,13 @@ import Icon from "../Icon";
 import PostItModal from "../PostItModal";
 import ConfirmModal from "../ConfirmModal";
 
-const Header = () => {
+const Header = ({ setNotes, notes }) => {
   const { pathname } = useLocation();
   const isTrashPage = pathname === "/trash";
   const [isPostItModalOpen, setIsPostItModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const trashNotes = notes.filter(({ type }) => type === "trash");
+  const trashNotesQuantity = trashNotes.length;
 
   return (
     <>
@@ -46,7 +49,18 @@ const Header = () => {
                 New Post +
               </Button>
               <Link to="/trash">
-                <Icon color="white" name="trash-empty" title="Trash" />
+                <div className="relative">
+                  <Icon
+                    color="white"
+                    name={trashNotesQuantity > 0 ? "trash" : "trash-empty"}
+                    title="Trash"
+                  />
+                  {trashNotesQuantity > 0 && (
+                    <div className="absolute top-0 right-0 flex h-3.5 w-3.5 items-center justify-center rounded-[50%] bg-red-600 text-white">
+                      {trashNotesQuantity}
+                    </div>
+                  )}
+                </div>
               </Link>
             </div>
           </div>
@@ -57,6 +71,7 @@ const Header = () => {
           setIsPostItModalOpen(false);
         }}
         isModalOpen={isPostItModalOpen}
+        setNotes={setNotes}
       />
       <ConfirmModal
         closeModal={() => {
@@ -65,10 +80,24 @@ const Header = () => {
         isModalOpen={isConfirmModalOpen}
         title="Empty Trash"
         description="Are you sure you want to empty the trash?"
-        onConfirm={() => {}}
+        onConfirm={() => {
+          setNotes((currentNotes) => currentNotes.filter(({ type }) => type !== "trash"));
+          setIsConfirmModalOpen(false);
+        }}
       />
     </>
   );
+};
+
+Header.propTypes = {
+  setNotes: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Header;
