@@ -1,30 +1,25 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import PostIt from "../../components/PostIt";
 import Button from "../../components/Button";
 import PostItModal from "../../components/PostItModal";
 
-const postsIt = [
-  { id: 1, text: "Moove It", type: "show" },
-  { id: 2, text: "Challenge", type: "show" },
-  { id: 3, text: "Nicolle MR", type: "show" },
-  { id: 4, text: "Hachiko", type: "show" },
-  { id: 5, text: "Nalita", type: "show" },
-];
-
-const Home = () => {
+const Home = ({ notes, setNotes }) => {
   const [isPostItModalOpen, setIsPostItModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const homeNotes = notes.filter(({ type }) => type === "show");
 
-  if (!postsIt?.length) {
+  if (!homeNotes?.length) {
     return (
       <div className="flex flex-col items-center">
-        <h2 className="text-shadow mb-8 bg-[#F19336] p-4 text-center text-5xl font-bold text-white">
+        <h2 className="text-shadow mb-8 bg-[#F19336] p-4 text-center text-xl font-bold text-white md:text-5xl">
           You&apos;ve not created any note yet
         </h2>
         <Button
           onClick={() => {
             setIsPostItModalOpen(true);
           }}
-          className="bg-white py-1.5 px-[3.12rem] text-2xl text-[#C08C4A] hover:bg-transparent hover:text-white"
+          className="bg-white px-2.5 py-1.5 text-lg text-[#C08C4A]	hover:bg-transparent hover:text-white md:py-0 md:px-5 md:text-2xl"
         >
           Create It
         </Button>
@@ -32,6 +27,7 @@ const Home = () => {
           closeModal={() => {
             setIsPostItModalOpen(false);
           }}
+          setNotes={setNotes}
           isModalOpen={isPostItModalOpen}
         />
       </div>
@@ -39,25 +35,49 @@ const Home = () => {
   }
   return (
     <main className="grid grid-cols-auto-fill gap-5">
-      {postsIt.map(({ id, text, type }) => (
+      {homeNotes.map(({ id, text, type }) => (
         <PostIt
           key={id}
           text={text}
           type={type}
-          onDelete={() => {}}
+          onDelete={() => {
+            const updatedNotes = notes.map((note) => {
+              if (note.id === id) {
+                return { ...note, type: "trash" };
+              }
+              return note;
+            });
+            setNotes(updatedNotes);
+          }}
           onEdit={() => {
             setIsPostItModalOpen(true);
+            setSelectedNote({ id, text, type });
           }}
         />
       ))}
       <PostItModal
         closeModal={() => {
+          setSelectedNote(null);
           setIsPostItModalOpen(false);
         }}
+        selectedNote={selectedNote}
         isModalOpen={isPostItModalOpen}
+        notes={notes}
+        setNotes={setNotes}
       />
     </main>
   );
+};
+
+Home.propTypes = {
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
+    }),
+  ).isRequired,
+  setNotes: PropTypes.func.isRequired,
 };
 
 export default Home;
