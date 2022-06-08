@@ -94,6 +94,7 @@ Header.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
+      color: PropTypes.string,
       text: PropTypes.string.isRequired,
       type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
     }),

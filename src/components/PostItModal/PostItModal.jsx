@@ -23,6 +23,7 @@ const PostItModal = ({ isModalOpen, closeModal, setNotes, selectedNote }) => (
       }}
       type="edit"
       text={selectedNote?.text || ""}
+      color={selectedNote?.color || "yellow"}
     />
   </Modal>
 );
@@ -35,6 +36,7 @@ PostItModal.propTypes = {
   setNotes: PropTypes.func.isRequired,
   selectedNote: PropTypes.shape({
     id: PropTypes.number,
+    color: PropTypes.string,
     text: PropTypes.string,
     type: PropTypes.oneOf(["edit", "show", "trash"]),
   }),

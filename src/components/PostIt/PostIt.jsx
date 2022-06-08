@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import pushPin from "../../assets/images/push-pin.png";
+import colors from "../../utils/colors";
+import ColorPicker from "../ColorPicker";
 import Icon from "../Icon";
 
 const PostIt = ({
   id,
   type,
   text,
+  color,
   onClose,
   onRemoveFromTrash,
   onDelete,
@@ -16,12 +19,21 @@ const PostIt = ({
   onUndo,
 }) => {
   const [postText, setPostText] = useState(text);
+  const [selectedColor, setSelectedColor] = useState(color);
+  const trashImageUrl = require(`../../assets/images/crumpled-paper-${selectedColor}.jpg`);
+
+  useEffect(() => {
+    setSelectedColor(color);
+  }, [color]);
 
   return (
     <div
-      className={`relative flex	h-[17.5rem] w-full flex-col bg-cover ${
-        type === "trash" ? "bg-crumpled-paper-yellow" : "bg-[#FFFD54]"
-      } px-4 shadow-2xl ${type === "edit" ? "pb-[3.43rem]" : "pb-0"}`}
+      className={`relative flex	h-[17.5rem] w-full flex-col bg-cover px-4 shadow-2xl ${
+        type === "edit" ? "pb-[3.43rem]" : "pb-0"
+      }`}
+      style={{
+        background: type === "trash" ? `url(${trashImageUrl})` : colors[selectedColor],
+      }}
     >
       {type === "show" && (
         <>
@@ -45,6 +57,10 @@ const PostIt = ({
       {type === "edit" && (
         <>
           <div className="mb-2.5 flex items-center justify-between pt-1">
+            <ColorPicker
+              selectedColor={selectedColor}
+              setSelectedColor={setSelectedColor}
+            />
             <button
               className="text-[1.06rem] font-bold tracking-widest text-black underline"
               type="button"
@@ -64,12 +80,13 @@ const PostIt = ({
             type="button"
             onClick={() => {
               if (id) {
-                onUpdate({ id, type: "show", text: postText });
+                onUpdate({ id, type: "show", text: postText, color: selectedColor });
               } else {
                 onCreate({
                   id: new Date().getMilliseconds(),
                   type: "show",
                   text: postText,
+                  color: selectedColor,
                 });
               }
               onClose();
@@ -98,6 +115,7 @@ const PostIt = ({
 
 PostIt.propTypes = {
   id: PropTypes.number,
+  color: PropTypes.string,
   type: PropTypes.oneOf(["edit", "show", "trash"]),
   text: PropTypes.string,
   onClose: PropTypes.func,
@@ -111,6 +129,7 @@ PostIt.propTypes = {
 
 PostIt.defaultProps = {
   id: 0,
+  color: "yellow",
   type: "show",
   text: "",
   onClose: () => {},

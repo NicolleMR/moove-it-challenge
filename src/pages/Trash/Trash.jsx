@@ -19,11 +19,12 @@ const Trash = ({ notes, setNotes }) => {
   }
   return (
     <main className="grid grid-cols-auto-fill gap-5">
-      {trashNotes.map(({ id, text, type }) => (
+      {trashNotes.map(({ id, text, type, color }) => (
         <PostIt
           key={id}
           text={text}
           type={type}
+          color={color}
           onRemoveFromTrash={() => {
             setIsTrashModalOpen(true);
             setSelectedPostItId(id);
@@ -61,6 +62,7 @@ Trash.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
+      color: PropTypes.string,
       text: PropTypes.string.isRequired,
       type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
     }),

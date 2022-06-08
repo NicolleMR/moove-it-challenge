@@ -35,11 +35,12 @@ const Home = ({ notes, setNotes }) => {
   }
   return (
     <main className="grid grid-cols-auto-fill gap-5">
-      {homeNotes.map(({ id, text, type }) => (
+      {homeNotes.map(({ id, text, type, color }) => (
         <PostIt
           key={id}
           text={text}
           type={type}
+          color={color}
           onDelete={() => {
             const updatedNotes = notes.map((note) => {
               if (note.id === id) {
@@ -51,7 +52,7 @@ const Home = ({ notes, setNotes }) => {
           }}
           onEdit={() => {
             setIsPostItModalOpen(true);
-            setSelectedNote({ id, text, type });
+            setSelectedNote({ id, text, type, color });
           }}
         />
       ))}
@@ -73,6 +74,7 @@ Home.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
+      color: PropTypes.string,
       text: PropTypes.string.isRequired,
       type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
     }),
