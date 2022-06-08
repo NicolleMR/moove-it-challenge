@@ -12,7 +12,7 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => (
         name="yellow"
         checked={selectedColor === "yellow"}
         onChange={(event) => setSelectedColor(event.target.value)}
-        className="accent-white"
+        className="cursor-pointer"
         style={{ opacity: selectedColor === "yellow" ? 1 : 0 }}
       />
     </div>
@@ -26,7 +26,7 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => (
         name="green"
         checked={selectedColor === "green"}
         onChange={(event) => setSelectedColor(event.target.value)}
-        className="accent-white"
+        className="cursor-pointer"
         style={{ opacity: selectedColor === "green" ? 1 : 0 }}
       />
     </div>
@@ -40,7 +40,7 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => (
         name="orange"
         checked={selectedColor === "orange"}
         onChange={(event) => setSelectedColor(event.target.value)}
-        className="accent-white"
+        className="cursor-pointer"
         style={{ opacity: selectedColor === "orange" ? 1 : 0 }}
       />
     </div>
@@ -54,7 +54,7 @@ const ColorPicker = ({ selectedColor, setSelectedColor }) => (
         name="purple"
         checked={selectedColor === "purple"}
         onChange={(event) => setSelectedColor(event.target.value)}
-        className="accent-white"
+        className="cursor-pointer"
         style={{ opacity: selectedColor === "purple" ? 1 : 0 }}
       />
     </div>
