@@ -19,7 +19,7 @@ const Home = ({ notes, setNotes }) => {
           onClick={() => {
             setIsPostItModalOpen(true);
           }}
-          className="bg-white px-2.5 py-1.5 text-lg text-[#C08C4A]	hover:bg-transparent hover:text-white md:py-0 md:px-5 md:text-2xl"
+          className="bg-white px-2.5 py-0 text-lg text-[#C08C4A]	hover:bg-transparent hover:text-white md:py-2 md:px-7 md:text-2xl"
         >
           Create It
         </Button>
