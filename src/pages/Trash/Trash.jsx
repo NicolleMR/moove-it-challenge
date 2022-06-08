@@ -1,21 +1,17 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import PostIt from "../../components/PostIt/PostIt";
 import ConfirmModal from "../../components/ConfirmModal";
 
-const postsIt = [
-  { id: 1, text: "Moove It", type: "trash" },
-  { id: 2, text: "Challenge", type: "trash" },
-  { id: 3, text: "Nicolle MR", type: "trash" },
-  { id: 4, text: "Hachiko", type: "trash" },
-  { id: 5, text: "Nalita", type: "trash" },
-];
-
-const Trash = () => {
+const Trash = ({ notes, setNotes }) => {
   const [isTrashModalOpen, setIsTrashModalOpen] = useState(false);
-  if (!postsIt?.length) {
+  const [selectedPostItId, setSelectedPostItId] = useState("");
+  const trashNotes = notes.filter(({ type }) => type === "trash");
+
+  if (!trashNotes?.length) {
     return (
       <div className="flex flex-col items-center">
-        <h2 className="text-shadow mb-8 bg-[#F19336] p-4 text-center text-5xl font-bold text-white">
+        <h2 className="text-shadow mb-8 bg-[#F19336] p-4 text-center text-2xl font-bold text-white md:text-5xl">
           You don&apos;t have any deleted notes yet
         </h2>
       </div>
@@ -23,13 +19,24 @@ const Trash = () => {
   }
   return (
     <main className="grid grid-cols-auto-fill gap-5">
-      {postsIt.map(({ id, text, type }) => (
+      {trashNotes.map(({ id, text, type }) => (
         <PostIt
           key={id}
           text={text}
           type={type}
           onRemoveFromTrash={() => {
             setIsTrashModalOpen(true);
+            setSelectedPostItId(id);
+          }}
+          onUndo={() => {
+            setNotes((currentNotes) =>
+              currentNotes.map((note) => {
+                if (note.id === id) {
+                  return { ...note, type: "show" };
+                }
+                return note;
+              }),
+            );
           }}
         />
       ))}
@@ -38,12 +45,27 @@ const Trash = () => {
         closeModal={() => {
           setIsTrashModalOpen(false);
         }}
-        title="Delete note from trash"
-        description="Are you sure you want to delete this note from trash?"
-        onConfirm={() => {}}
+        title="Delete note"
+        description="Are you sure you want to delete this note? You won't be able to undo this change"
+        onConfirm={() => {
+          const updatedNotes = notes.filter((note) => note.id !== selectedPostItId);
+          setNotes(updatedNotes);
+          setIsTrashModalOpen(false);
+        }}
       />
     </main>
   );
+};
+
+Trash.propTypes = {
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(["edit", "show", "trash"]).isRequired,
+    }),
+  ).isRequired,
+  setNotes: PropTypes.func.isRequired,
 };
 
 export default Trash;
